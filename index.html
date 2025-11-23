@@ -15,14 +15,13 @@ body {font-family:'Roboto',sans-serif; min-height:100vh; overflow:hidden; backgr
   object-fit:cover;
   z-index:-1;
   display:none;
-  filter: brightness(0.5);
   will-change: transform;
   backface-visibility: hidden;
 }
 
 #overlay {
   position:fixed; top:0; left:0; width:100%; height:100%; 
-  background: rgba(0,0,0,0.4); z-index:0; display:none;
+  background: rgba(0,0,0,0.35); z-index:0; display:none;
 }
 
 #startBtn {
@@ -72,7 +71,7 @@ button.download-btn:hover { transform: scale(1.1); }
 <button id="startBtn">Start Website</button>
 
 <video id="bgVideo" autoplay loop muted playsinline preload="auto">
-  <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Cossdv/main/VID_20251123_155335_891.mp4" type="video/mp4">
+  <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Cossdv/main/VID_20251123_155335_891_480p.mp4" type="video/mp4">
   Your browser does not support HTML5 video.
 </video>
 <div id="overlay"></div>
@@ -101,20 +100,21 @@ startBtn.addEventListener('click', () => {
   overlay.style.display = "block";
   mainContent.style.display = "block";
   startBtn.style.display = "none";
-  bgVideo.muted = false;
+  bgVideo.muted = true; // autoplay guaranteed
   bgVideo.play().catch(()=>{});
 });
 
-// Clean URL
+// Ensure loop never fails
+bgVideo.addEventListener('ended', ()=>{
+  bgVideo.currentTime = 0;
+  bgVideo.play().catch(()=>{});
+});
+
 function cleanUrl(url) {
-  try {
-    let u = new URL(url);
-    u.search = '';
-    return u.toString();
-  } catch { return url; }
+  try { let u = new URL(url); u.search=''; return u.toString(); } 
+  catch { return url; }
 }
 
-// API request and result display
 async function process() {
   const rawUrl = urlInput.value.trim();
   if(!rawUrl) return alert("Bhai link daal pehle!");
@@ -130,8 +130,7 @@ async function process() {
     if(!res.ok) throw new Error("Network Error / API not responding");
 
     const data = await res.json();
-    if(!data || !data.result || data.result.length === 0) 
-      throw new Error("API returned no downloadable content. Make sure the link is public and valid.");
+    if(!data || !data.result || data.result.length===0) throw new Error("API returned no downloadable content. Make sure the link is public and valid.");
 
     let html = `<div class="success">✅ Video Ready!</div>`;
     if(data.metadata?.caption) html += `<p style="color:#ffcc00; font-size:16px;">${data.metadata.caption}</p>`;
