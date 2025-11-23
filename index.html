@@ -100,11 +100,10 @@ startBtn.addEventListener('click', () => {
   overlay.style.display = "block";
   mainContent.style.display = "block";
   startBtn.style.display = "none";
-  bgVideo.muted = true; // autoplay guaranteed
+  bgVideo.muted = true; // autoplay safe
   bgVideo.play().catch(()=>{});
 });
 
-// Ensure loop never fails
 bgVideo.addEventListener('ended', ()=>{
   bgVideo.currentTime = 0;
   bgVideo.play().catch(()=>{});
@@ -125,7 +124,7 @@ async function process() {
   result.style.display = "none";
 
   try {
-    const apiUrl = `https://jawad-tech.vercel.app/downloader?url=${encodeURIComponent(url)}`;
+    const apiUrl = `https://legendxdata.site/alll.php?url=${encodeURIComponent(url)}`;
     const res = await fetch(apiUrl);
     if(!res.ok) throw new Error("Network Error / API not responding");
 
