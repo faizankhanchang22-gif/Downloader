@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>OBITO Downloader</title>
 <meta name="description" content="Free All in One Downloader - Instagram, TikTok, Facebook, Twitter & more" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&display=swap');
-
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Roboto', sans-serif;
     min-height: 100vh;
     overflow: hidden;
-    background: #000;
+    background: linear-gradient(135deg,#000,#1a0000);
     color: #fff;
 }
-
 #bgVideo {
     position: fixed;
     top:0; left:0;
@@ -24,64 +23,91 @@ body {
     object-fit: cover;
     z-index: -1;
     display: none;
+    filter: brightness(0.6);
 }
 
 #startBtn {
     position: fixed;
     top:50%; left:50%;
     transform: translate(-50%, -50%);
-    padding: 20px 50px;
-    font-size: 24px;
+    padding: 20px 60px;
+    font-size: 26px;
     font-weight: bold;
-    border:none; border-radius:10px;
-    background: #ff4747;
+    border:none; border-radius:12px;
+    background: linear-gradient(45deg,#ff0000,#ff4d4d);
     color:#fff;
     cursor:pointer;
     z-index: 10;
-    box-shadow: 0 0 20px rgba(255,0,0,0.7);
+    box-shadow: 0 0 25px rgba(255,0,0,0.8);
+    transition: 0.3s;
 }
+#startBtn:hover { transform: translate(-50%,-50%) scale(1.05); box-shadow:0 0 40px #ff0000; }
 
 .container {
-    max-width:700px; width:100%;
+    max-width:750px; width:100%;
     text-align:center;
     padding: 20px;
-    display:none; /* hidden until start button clicked */
+    display:none;
+    animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    0% {opacity:0; transform: translateY(20px);}
+    100% {opacity:1; transform: translateY(0);}
 }
 
 h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 4rem;
-    background: linear-gradient(90deg, #ff0000, #ff4d4d);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size:4rem;
+    background: linear-gradient(90deg,#ff0000,#ff4d4d);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
     margin: 20px 0;
+    text-shadow:0 0 15px #ff0000;
 }
 
-.powered { font-size:1.3rem; color:#00ff88; margin-bottom:30px; font-weight:bold; text-shadow:0 0 10px #00ff88; }
+.powered {
+    font-size:1.4rem;
+    color:#00ff88;
+    margin-bottom:25px;
+    font-weight:bold;
+    text-shadow: 0 0 12px #00ff88;
+}
 
 input {
     width:90%; padding:18px; font-size:17px;
     border:3px solid #333; border-radius:15px;
     background:#111; color:#fff; margin-bottom:20px;
+    transition:0.3s;
 }
 input:focus { border-color:#ff0000; outline:none; }
 
 button.download-btn {
-    display: inline-block; background:#ff0000; color:white;
-    padding:12px 25px; margin:10px; border-radius:50px;
+    display:inline-block;
+    background: linear-gradient(45deg,#ff0000,#ff4d4d);
+    color:white;
+    padding:12px 25px; margin:10px;
+    border-radius:50px;
     text-decoration:none; font-weight:bold;
+    box-shadow:0 0 15px rgba(255,0,0,0.6);
+    transition:0.3s;
+}
+button.download-btn:hover {
+    transform:scale(1.05);
+    box-shadow:0 0 30px #ff0000;
 }
 
 #result {
     margin-top:30px; padding:25px;
-    background: rgba(20,20,20,0.9);
-    border: 2px solid #333; border-radius:15px;
+    background: rgba(20,20,20,0.85);
+    border:2px solid #333; border-radius:15px;
     display:none; backdrop-filter: blur(10px);
 }
 
 footer {
-    margin-top:auto; padding:30px; font-size:1.4rem;
-    font-weight:bold; color:#ff0000; text-shadow:0 0 10px red;
+    margin-top:auto; padding:25px;
+    font-size:1.3rem; font-weight:bold;
+    color:#ff0000; text-shadow:0 0 12px red;
     display:none;
 }
 </style>
@@ -114,17 +140,15 @@ const bgVideo = document.getElementById('bgVideo');
 const mainContent = document.getElementById('mainContent');
 const footer = document.getElementById('footer');
 
-// Start Button Click → show video + content
 startBtn.addEventListener('click', () => {
     bgVideo.style.display = "block";
     mainContent.style.display = "block";
     footer.style.display = "block";
-    bgVideo.muted = false; // unmute after user interaction
+    bgVideo.muted = false;
     bgVideo.play();
     startBtn.style.display = "none";
 });
 
-// Process function — API fetch + JSON handling
 async function process() {
     const input = document.getElementById('urlInput');
     const result = document.getElementById('result');
@@ -138,7 +162,7 @@ async function process() {
     result.style.display = "none";
 
     try {
-        const api = `https://jawad-tech.vercel.app/downloader?url=${encodeURIComponent(url)}`;
+        const api = `https://socialdownloder.anshapi.workers.dev?url=${encodeURIComponent(url)}`;
         const res = await fetch(api);
         const data = await res.json();
 
@@ -146,19 +170,18 @@ async function process() {
 
         let html = `<div class="success">✅ Video Mil Gaya!</div>`;
         if (data.title) html += `<h3>${data.title}</h3>`;
-        if (data.thumbnails?.[0]) html += `<img src="${data.thumbnails[0]}" style="max-width:100%; border-radius:15px; margin:15px 0;">`;
+        if (data.thumbnail) html += `<img src="${data.thumbnail}" style="max-width:100%; border-radius:15px; margin:15px 0;">`;
 
-        // Handle all URLs from JSON properly
         if (data.urls?.length > 0) {
-            data.urls.forEach((link, i) => {
-                html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1} (HD)</a><br/>`;
+            data.urls.forEach((link,i)=>{
+                html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1}</a><br/>`;
             });
         } else {
             html += `<p>No download link found. Make sure it is a public link!</p>`;
         }
 
         result.innerHTML = html;
-    } catch (e) {
+    } catch(e) {
         result.innerHTML = `<div class="error">❌ Error: ${e.message}<br><br>Tip: Use public link & remove extra parameters!</div>`;
     } finally {
         btn.disabled = false;
@@ -167,9 +190,8 @@ async function process() {
     }
 }
 
-// Enter key triggers download
-document.getElementById('urlInput').addEventListener('keypress', e => {
-    if (e.key === 'Enter') process();
+document.getElementById('urlInput').addEventListener('keypress', e=>{
+    if(e.key==='Enter') process();
 });
 </script>
 
