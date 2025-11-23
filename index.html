@@ -3,156 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OBITO Downloader</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<title>OBITO DOWNLOADER</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family:'Roboto',sans-serif;
-  min-height:100vh;
-  overflow:hidden;
-  background:#000;
-  color:#fff;
-}
-#bgVideo {
-  position:fixed; top:0; left:0; width:100vw; height:100vh;
-  object-fit:cover; z-index:-1; display:none;
-  will-change: transform; backface-visibility: hidden;
-}
-#overlay {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.35); z-index:0; display:none;
-}
-#startBtn {
-  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-  padding:22px 60px; font-size:28px; font-weight:bold;
-  border:none; border-radius:15px;
-  background: linear-gradient(45deg,#ff0000,#ff4d4d);
-  color:#fff; cursor:pointer; z-index:10;
-  box-shadow:0 0 25px rgba(255,0,0,0.8);
-  animation: pulse 1.5s infinite; transition:0.3s;
-}
-#startBtn:hover { transform:translate(-50%,-50%) scale(1.05); box-shadow:0 0 40px #ff0000; }
-@keyframes pulse {0%{box-shadow:0 0 15px #ff0000}50%{box-shadow:0 0 40px #ff0000}100%{box-shadow:0 0 15px #ff0000}}
-.container {
-  max-width:750px; width:90%; text-align:center; padding:20px; display:none;
-  margin:auto; position:relative; z-index:1; animation:fadeIn 1s ease forwards;
-}
-@keyframes fadeIn {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
-h1 {
-  font-family:'Orbitron',sans-serif; font-size:3rem; line-height:1.2;
-  background: linear-gradient(90deg,#ff0000,#ff4d4d,#ff00ff,#ffcc00);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 15px #ff00ff; margin-bottom:15px;
-}
-.powered { font-family:'Rajdhani',sans-serif; font-size:1.5rem; color:#00ff88; margin-bottom:20px; font-weight:bold; text-shadow:0 0 12px #00ff88; }
-input {
-  width:100%; padding:16px 20px; font-size:17px; border:3px solid #333; border-radius:12px;
-  background:#111; color:#fff; margin-bottom:20px; transition:0.3s;
-}
-input:focus { border-color:#ff00ff; outline:none; }
-button.download-btn {
-  display:inline-block; background: linear-gradient(45deg,#ff00ff,#00ffff,#ffcc00);
-  color:#fff; padding:16px 40px; margin:10px 0; border-radius:50px;
-  font-weight:700; font-family:'Rajdhani',sans-serif; text-transform:uppercase; font-size:20px;
-  box-shadow:0 0 5px #ff00ff,0 0 10px #00ffff,0 0 20px #ffcc00,0 0 40px #ff00ff,0 0 80px #00ffff;
-  border:1px solid #ff00ff; transition:0.3s; animation: neonPulse 1.8s infinite alternate;
-}
-button.download-btn:hover { transform: scale(1.1); }
-@keyframes neonPulse {0% {box-shadow:0 0 5px #ff00ff,0 0 10px #00ffff,0 0 20px #ffcc00,0 0 40px #ff00ff,0 0 80px #00ffff;}
-50% {box-shadow:0 0 15px #ff00ff,0 0 25px #00ffff,0 0 35px #ffcc00,0 0 60px #ff00ff,0 0 100px #00ffff;}
-100% {box-shadow:0 0 5px #ff00ff,0 0 10px #00ffff,0 0 20px #ffcc00,0 0 40px #ff00ff,0 0 80px #00ffff;}}
-#result {margin-top:30px; padding:25px; background: rgba(20,20,20,0.85); border:2px solid #333; border-radius:15px; display:none; backdrop-filter: blur(5px); text-align:center;}
-.created {font-family:'Rajdhani',sans-serif; font-size:1.2rem; color:#ff0000; margin-top:20px; font-weight:bold; text-shadow:0 0 12px red; animation: fadeUp 1s ease;}
-@keyframes fadeUp {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
+* {margin:0; padding:0; box-sizing:border-box; font-family:Poppins,sans-serif;}
+body {overflow:hidden; background:#000;}
+
+/* BACKGROUND VIDEO */
+#bgVideo {position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2;}
+
+/* SOFT OVERLAY */
+.overlay {position:fixed; inset:0; background: rgba(0,0,0,0.25); backdrop-filter: blur(1px); z-index:-1;}
+
+/* START SCREEN */
+#startScreen {position:fixed; inset:0; background:#000; display:flex; justify-content:center; align-items:center; flex-direction:column; z-index:5;}
+#startBtn {padding:15px 40px; font-size:22px; border-radius:15px; border:none; background:linear-gradient(90deg,#00eaff,#0088ff); color:#000; font-weight:800; text-transform:uppercase; cursor:pointer; box-shadow:0 0 20px #00eaff; transition:0.3s;}
+#startBtn:hover {transform:scale(1.05); box-shadow:0 0 30px #00eaff;}
+
+/* MAIN CONTAINER */
+.container {width:90%; max-width:480px; margin:100px auto 120px auto; text-align:center; color:white; display:none;}
+
+/* TITLE */
+.title {font-size:38px; font-weight:800; color:#00eaff; text-shadow:0 0 25px #00eaff,0 0 50px #00eaff; margin-bottom:10px;}
+
+/* INPUT */
+input {width:100%; padding:14px; border-radius:12px; border:none; outline:none; font-size:15px; margin-bottom:18px; background: rgba(255,255,255,0.18); color:white; backdrop-filter:blur(4px);}
+
+/* DOWNLOAD BUTTON */
+button.downloadBtn {width:100%; padding:14px; font-size:18px; border:none; border-radius:12px; background:linear-gradient(90deg,#00eaff,#0077ff); color:black; font-weight:700; cursor:pointer; transition:0.3s;}
+button.downloadBtn:hover {transform:scale(1.04); box-shadow:0 0 20px #00eaff;}
+
+/* LOADER */
+.loader {display:none; margin-top:15px; font-size:16px; color:#00eaff; text-shadow:0 0 10px #00eaff;}
+
+/* CREATED BY OBITO */
+.creator {display:none; font-size:18px; color:#ff00ff; letter-spacing:2px; text-shadow:0 0 10px #ff00ff,0 0 20px #ff00ff; font-weight:700; margin-top:30px;}
+
+/* MUSIC */
 </style>
 </head>
 <body>
 
-<button id="startBtn">Start Website</button>
-
-<video id="bgVideo" autoplay loop muted playsinline preload="auto">
-  <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Fauzuna/e5a03ffd1e98216d3ba1f5398d83262dcb5d716c/VID_20251123_184332_725.mp4" type="video/mp4">
-  Your browser does not support HTML5 video.
+<!-- BACKGROUND VIDEO -->
+<video id="bgVideo" autoplay loop muted playsinline>
+    <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Cossdv/ffbd28bb0f2cc21b56ee3fc59e1ac44f50539260/VID-20251123-WA0027(1).mp4" type="video/mp4">
 </video>
-<div id="overlay"></div>
+<div class="overlay"></div>
 
-<div class="container" id="mainContent">
-  <h1>OBITO DOWNLOADER</h1>
-  <div class="powered">Powered by Faizan Baloch</div>
-  <input type="text" id="urlInput" placeholder="Paste Instagram, TikTok, FB, Twitter link here..." />
-  <br/>
-  <button id="downloadBtn" class="download-btn">DOWNLOAD NOW</button>
-  <div id="result"></div>
-  <div class="created">Created by OBITO UCHIHA</div>
+<!-- START SCREEN -->
+<div id="startScreen">
+    <button id="startBtn">START</button>
 </div>
 
+<!-- MAIN UI -->
+<div class="container">
+    <div class="title">OBITO DOWNLOADER</div>
+    <input type="text" id="urlInput" placeholder="Paste Instagram Reel URL">
+    <button class="downloadBtn" onclick="download()">Download</button>
+    <div class="loader" id="loader">Processing… Please wait</div>
+    <a id="downloadLink" style="display:none;"></a>
+    <!-- CREATED BY OBITO -->
+    <div class="creator" id="creatorText">CREATED BY OBITO UCHIHA</div>
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" src="music.mp3"></audio>
+
 <script>
-const startBtn = document.getElementById('startBtn');
-const bgVideo = document.getElementById('bgVideo');
-const overlay = document.getElementById('overlay');
-const mainContent = document.getElementById('mainContent');
-const downloadBtn = document.getElementById('downloadBtn');
-const urlInput = document.getElementById('urlInput');
-const result = document.getElementById('result');
+const startBtn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
+const container = document.querySelector(".container");
+const bgVideo = document.getElementById("bgVideo");
+const bgMusic = document.getElementById("bgMusic");
+const creatorText = document.getElementById("creatorText");
 
-startBtn.addEventListener('click', () => {
-  bgVideo.style.display = "block";
-  overlay.style.display = "block";
-  mainContent.style.display = "block";
-  startBtn.style.display = "none";
-  bgVideo.muted = true; 
-  bgVideo.play().catch(()=>{});
-});
+// START BUTTON CLICK
+startBtn.onclick = () => {
+    startScreen.style.display = "none";
+    container.style.display = "block";
+    creatorText.style.display = "block";
 
-bgVideo.addEventListener('ended', ()=>{
-  bgVideo.currentTime = 0;
-  bgVideo.play().catch(()=>{});
-});
+    bgVideo.muted = false;
+    bgVideo.play();
 
-function cleanUrl(url) {
-  try { let u = new URL(url); u.search=''; return u.toString(); } 
-  catch { return url; }
+    bgMusic.volume = 0.7;
+    bgMusic.play();
 }
 
-async function process() {
-  const rawUrl = urlInput.value.trim();
-  if(!rawUrl) return alert("Bhai link daal pehle!");
-  const url = cleanUrl(rawUrl);
+// DOWNLOAD FUNCTION
+async function download() {
+    const url = document.getElementById("urlInput").value.trim();
+    if(!url) return alert("Please paste a valid Instagram URL!");
+    const loader = document.getElementById("loader");
+    loader.style.display = "block";
 
-  downloadBtn.disabled = true;
-  downloadBtn.textContent = "Processing...";
-  result.style.display = "none";
+    try {
+        const res = await fetch("https://jawad-tech.vercel.app/downloader?url="+encodeURIComponent(url));
+        const data = await res.json();
+        if(!data.status || !data.result[0]) {
+            alert("API returned no downloadable content.");
+            loader.style.display = "none";
+            return;
+        }
 
-  try {
-    const proxy = "https://corsproxy.io/?";
-    const apiUrl = `https://legendxdata.site/alll.php?url=${encodeURIComponent(url)}`;
-    const res = await fetch(proxy + encodeURIComponent(apiUrl));
-    if(!res.ok) throw new Error("Network Error / API not responding");
-
-    const data = await res.json();
-    if(!data || !data.result || data.result.length===0) throw new Error("API returned no downloadable content. Make sure the link is public and valid.");
-
-    let html = `<div class="success">✅ Video Ready!</div>`;
-    if(data.metadata?.caption) html += `<p style="color:#ffcc00; font-size:16px;">${data.metadata.caption}</p>`;
-    if(data.metadata?.author) html += `<p style="color:#00ff88; font-size:14px;">By: ${data.metadata.author}</p>`;
-
-    data.result.forEach((link,i)=>{
-      html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1}</a><br/>`;
-    });
-
-    result.innerHTML = html;
-  } catch(e) {
-    result.innerHTML = `<div class="error">❌ ${e.message}</div>`;
-  } finally {
-    downloadBtn.disabled = false;
-    downloadBtn.textContent = "DOWNLOAD NOW";
-    result.style.display = "block";
-  }
+        // AUTO DOWNLOAD
+        const videoURL = data.result[0];
+        const link = document.getElementById("downloadLink");
+        link.href = videoURL;
+        link.download = "video.mp4";
+        link.click();
+    } catch(e) {
+        alert("Failed to fetch API.");
+    }
+    loader.style.display = "none";
 }
-
-downloadBtn.addEventListener('click', process);
-urlInput.addEventListener('keypress', e => { if(e.key==='Enter') process(); });
 </script>
-
 </body>
   </html>
