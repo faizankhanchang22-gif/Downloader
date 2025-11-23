@@ -7,128 +7,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * {margin:0;padding:0;box-sizing:border-box;}
-body {
-  font-family: 'Roboto', sans-serif;
-  min-height:100vh;
-  overflow:hidden;
-  background:#000;
-  color:#fff;
-}
+body {font-family:'Roboto',sans-serif; min-height:100vh; overflow:hidden; background:#000; color:#fff;}
+
 #bgVideo {
-  position:fixed;
-  top:0; left:0;
+  position:fixed; top:0; left:0;
   width:100vw; height:100vh;
   object-fit:cover;
   z-index:-1;
   display:none;
-  filter: brightness(0.5) blur(1px);
+  filter: brightness(0.5);
+  will-change: transform;
+  backface-visibility: hidden;
 }
+
 #overlay {
-  position:fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.4);
-  z-index:0;
-  display:none;
+  position:fixed; top:0; left:0; width:100%; height:100%; 
+  background: rgba(0,0,0,0.4); z-index:0; display:none;
 }
+
 #startBtn {
-  position:fixed;
-  top:50%; left:50%;
+  position:fixed; top:50%; left:50%;
   transform:translate(-50%,-50%);
-  padding:22px 60px;
-  font-size:28px;
-  font-weight:bold;
-  border:none;
-  border-radius:15px;
+  padding:22px 60px; font-size:28px; font-weight:bold;
+  border:none; border-radius:15px;
   background: linear-gradient(45deg,#ff0000,#ff4d4d);
-  color:#fff;
-  cursor:pointer;
-  z-index:10;
-  box-shadow:0 0 25px rgba(255,0,0,0.8);
-  animation: pulse 1.5s infinite;
-  transition:0.3s;
+  color:#fff; cursor:pointer; z-index:10; box-shadow:0 0 25px rgba(255,0,0,0.8);
+  animation: pulse 1.5s infinite; transition:0.3s;
 }
 #startBtn:hover { transform:translate(-50%,-50%) scale(1.05); box-shadow:0 0 40px #ff0000; }
-@keyframes pulse { 0%{box-shadow:0 0 15px #ff0000}50%{box-shadow:0 0 40px #ff0000}100%{box-shadow:0 0 15px #ff0000} }
+@keyframes pulse {0%{box-shadow:0 0 15px #ff0000}50%{box-shadow:0 0 40px #ff0000}100%{box-shadow:0 0 15px #ff0000}}
 
-.container {
-  max-width:750px; width:90%;
-  text-align:center;
-  padding:20px;
-  display:none;
-  margin:auto;
-  position:relative;
-  z-index:1;
-  animation: fadeIn 1s ease forwards;
-}
-@keyframes fadeIn {0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+.container {max-width:750px; width:90%; text-align:center; padding:20px; display:none; margin:auto; position:relative; z-index:1; animation:fadeIn 1s ease forwards;}
+@keyframes fadeIn {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
 
-h1 {
-  font-family:'Orbitron',sans-serif;
-  font-size:4rem;
-  background: linear-gradient(90deg,#ff0000,#ff4d4d,#ff00ff,#ffcc00);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  text-shadow:0 0 15px #ff00ff;
-  margin-bottom:15px;
-}
-
-.powered {
-  font-family:'Rajdhani',sans-serif;
-  font-size:1.5rem;
-  color:#00ff88;
-  margin-bottom:30px;
-  font-weight:bold;
-  text-shadow:0 0 12px #00ff88;
-}
-
-input {
-  width:100%; padding:16px 20px; font-size:17px;
-  border:3px solid #333; border-radius:12px;
-  background:#111; color:#fff; margin-bottom:20px;
-  transition:0.3s;
-}
-input:focus { border-color:#ff0000; outline:none; }
+h1 {font-family:'Orbitron',sans-serif; font-size:3rem; line-height:1.2; background: linear-gradient(90deg,#ff0000,#ff4d4d,#ff00ff,#ffcc00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 0 15px #ff00ff; margin-bottom:15px;}
+.powered {font-family:'Rajdhani',sans-serif; font-size:1.5rem; color:#00ff88; margin-bottom:20px; font-weight:bold; text-shadow:0 0 12px #00ff88;}
+input {width:100%; padding:16px 20px; font-size:17px; border:3px solid #333; border-radius:12px; background:#111; color:#fff; margin-bottom:20px; transition:0.3s;}
+input:focus { border-color:#ff00ff; outline:none; }
 
 button.download-btn {
   display:inline-block;
-  background: linear-gradient(90deg,#ff0055,#ff00ff,#ffcc00);
-  color:white;
-  padding:14px 30px;
-  margin:10px;
-  border-radius:50px;
-  text-decoration:none;
-  font-weight:600;
-  font-family:'Rajdhani',sans-serif;
-  box-shadow:0 0 15px rgba(255,0,255,0.8);
-  transition:0.3s;
+  background: linear-gradient(45deg,#ff00ff,#00ffff,#ffcc00);
+  color:#fff; padding:16px 40px; margin:10px 0; border-radius:50px;
+  font-weight:700; font-family:'Rajdhani',sans-serif;
+  text-transform:uppercase; font-size:20px;
+  box-shadow:0 0 5px #ff00ff,0 0 10px #00ffff,0 0 20px #ffcc00,0 0 40px #ff00ff,0 0 80px #00ffff;
+  border:1px solid #ff00ff; transition:0.3s;
+  animation: neonPulse 1.8s infinite alternate;
 }
-button.download-btn:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 30px #ff00ff;
-}
-
-#result {
-  margin-top:30px; padding:25px;
-  background: rgba(20,20,20,0.85);
-  border:2px solid #333; border-radius:15px;
-  display:none;
-  backdrop-filter: blur(10px);
-  text-align:center;
+button.download-btn:hover { transform: scale(1.1); }
+@keyframes neonPulse {
+  0% {box-shadow:0 0 5px #ff00ff,0 0 10px #00ffff,0 0 20px #ffcc00,0 0 40px #ff00ff,0 0 80px #00ffff;}
+  50% {box-shadow:0 0 15px #ff00ff,0 0 25px #00ffff,0 0 35px #ffcc00,0 0 60px #ff00ff,0 0 100px #00ffff;}
+  100% {box-shadow:0 0 5px #ff00ff,0 0 10px #00ffff,0 0 20px #ffcc00,0 0 40px #ff00ff,0 0 80px #00ffff;}
 }
 
-footer {
-  margin-top:40px; padding:25px;
-  font-size:1.3rem; font-weight:bold;
-  color:#ff0000; text-shadow:0 0 12px red;
-  display:none;
-}
+#result {margin-top:30px; padding:25px; background: rgba(20,20,20,0.85); border:2px solid #333; border-radius:15px; display:none; backdrop-filter: blur(5px); text-align:center;}
+.created {font-family:'Rajdhani',sans-serif; font-size:1.2rem; color:#ff0000; margin-top:20px; font-weight:bold; text-shadow:0 0 12px red; animation: fadeUp 1s ease;}
+@keyframes fadeUp {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
 </style>
 </head>
 <body>
 
 <button id="startBtn">Start Website</button>
 
-<video id="bgVideo" autoplay loop muted playsinline>
+<video id="bgVideo" autoplay loop muted playsinline preload="auto">
   <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Cossdv/main/VID_20251123_155335_891.mp4" type="video/mp4">
   Your browser does not support HTML5 video.
 </video>
@@ -139,61 +82,68 @@ footer {
   <div class="powered">Powered by Faizan Baloch</div>
   <input type="text" id="urlInput" placeholder="Paste Instagram, TikTok, FB, Twitter link here..." />
   <br/>
-  <button id="downloadBtn">DOWNLOAD NOW</button>
+  <button id="downloadBtn" class="download-btn">DOWNLOAD NOW</button>
   <div id="result"></div>
+  <div class="created">Created by OBITO UCHIHA</div>
 </div>
-
-<footer id="footer">Created by OBITO UCHIHA</footer>
 
 <script>
 const startBtn = document.getElementById('startBtn');
 const bgVideo = document.getElementById('bgVideo');
 const overlay = document.getElementById('overlay');
 const mainContent = document.getElementById('mainContent');
-const footer = document.getElementById('footer');
 const downloadBtn = document.getElementById('downloadBtn');
 const urlInput = document.getElementById('urlInput');
 const result = document.getElementById('result');
 
 startBtn.addEventListener('click', () => {
-  bgVideo.style.display="block";
-  overlay.style.display="block";
-  mainContent.style.display="block";
-  footer.style.display="block";
-  bgVideo.muted=false;
-  bgVideo.play().catch(()=>{}); // handle autoplay restrictions
-  startBtn.style.display="none";
+  bgVideo.style.display = "block";
+  overlay.style.display = "block";
+  mainContent.style.display = "block";
+  startBtn.style.display = "none";
+  bgVideo.muted = false;
+  bgVideo.play().catch(()=>{});
 });
 
+// Clean URL
+function cleanUrl(url) {
+  try {
+    let u = new URL(url);
+    u.search = '';
+    return u.toString();
+  } catch { return url; }
+}
+
+// API request and result display
 async function process() {
-  const url = urlInput.value.trim();
-  if(!url) return alert("Bhai link daal pehle!");
+  const rawUrl = urlInput.value.trim();
+  if(!rawUrl) return alert("Bhai link daal pehle!");
+  const url = cleanUrl(rawUrl);
 
   downloadBtn.disabled = true;
   downloadBtn.textContent = "Processing...";
   result.style.display = "none";
 
   try {
-    const proxy = "https://corsproxy.io/?";
-    const apiUrl = `https://socialdownloder.anshapi.workers.dev?url=${encodeURIComponent(url)}`;
-    const res = await fetch(proxy + encodeURIComponent(apiUrl));
+    const apiUrl = `https://jawad-tech.vercel.app/downloader?url=${encodeURIComponent(url)}`;
+    const res = await fetch(apiUrl);
+    if(!res.ok) throw new Error("Network Error / API not responding");
+
     const data = await res.json();
+    if(!data || !data.result || data.result.length === 0) 
+      throw new Error("API returned no downloadable content. Make sure the link is public and valid.");
 
-    if(!data.status) throw new Error(data.error || "Unsupported URL / Private Content");
+    let html = `<div class="success">✅ Video Ready!</div>`;
+    if(data.metadata?.caption) html += `<p style="color:#ffcc00; font-size:16px;">${data.metadata.caption}</p>`;
+    if(data.metadata?.author) html += `<p style="color:#00ff88; font-size:14px;">By: ${data.metadata.author}</p>`;
 
-    let html = `<div class="success">✅ Video Mil Gaya!</div>`;
-    if(data.title) html += `<h3 style="color:#ff00ff; text-shadow:0 0 10px #ff00ff;">${data.title}</h3>`;
-    if(data.thumbnail) html += `<img src="${data.thumbnail}" style="max-width:100%; border-radius:15px; margin:15px 0;">`;
-
-    if(data.urls?.length > 0){
-      data.urls.forEach((link,i)=>{
-        html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1}</a><br/>`;
-      });
-    } else html += `<p style="color:#ff4444;">No download link found. Use public link!</p>`;
+    data.result.forEach((link,i)=>{
+      html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1}</a><br/>`;
+    });
 
     result.innerHTML = html;
   } catch(e) {
-    result.innerHTML = `<div class="error">❌ Error: ${e.message}<br><br>Tip: Use public link & remove extra parameters!</div>`;
+    result.innerHTML = `<div class="error">❌ ${e.message}</div>`;
   } finally {
     downloadBtn.disabled = false;
     downloadBtn.textContent = "DOWNLOAD NOW";
