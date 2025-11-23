@@ -6,145 +6,141 @@
 <title>OBITO Downloader</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+* {margin:0;padding:0;box-sizing:border-box;}
 body {
-    font-family: 'Roboto', sans-serif;
-    min-height: 100vh;
-    overflow: hidden;
-    background: #000;
-    color: #fff;
+  font-family: 'Roboto', sans-serif;
+  min-height:100vh;
+  overflow:hidden;
+  background:#000;
+  color:#fff;
 }
-
 #bgVideo {
-    position: fixed;
-    top:0; left:0;
-    width:100vw; height:100vh;
-    object-fit: cover;
-    z-index: -1;
-    display: none;
-    filter: brightness(0.6);
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  object-fit:cover;
+  z-index:-1;
+  display:none;
+  filter: brightness(0.5) blur(1px);
 }
-
 #overlay {
-    position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.4);
-    z-index: 0;
-    display:none;
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.4);
+  z-index:0;
+  display:none;
 }
-
 #startBtn {
-    position: fixed;
-    top:50%; left:50%;
-    transform: translate(-50%, -50%);
-    padding: 22px 60px;
-    font-size: 28px;
-    font-weight: bold;
-    border:none; border-radius:15px;
-    background: linear-gradient(45deg,#ff0000,#ff4d4d);
-    color:#fff;
-    cursor:pointer;
-    z-index: 10;
-    box-shadow: 0 0 25px rgba(255,0,0,0.8);
-    transition: 0.3s;
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  padding:22px 60px;
+  font-size:28px;
+  font-weight:bold;
+  border:none;
+  border-radius:15px;
+  background: linear-gradient(45deg,#ff0000,#ff4d4d);
+  color:#fff;
+  cursor:pointer;
+  z-index:10;
+  box-shadow:0 0 25px rgba(255,0,0,0.8);
+  animation: pulse 1.5s infinite;
+  transition:0.3s;
 }
-#startBtn:hover { transform: translate(-50%,-50%) scale(1.05); box-shadow:0 0 40px #ff0000; }
+#startBtn:hover { transform:translate(-50%,-50%) scale(1.05); box-shadow:0 0 40px #ff0000; }
+@keyframes pulse { 0%{box-shadow:0 0 15px #ff0000}50%{box-shadow:0 0 40px #ff0000}100%{box-shadow:0 0 15px #ff0000} }
 
 .container {
-    max-width:750px; width:90%;
-    text-align:center;
-    padding: 20px;
-    display:none;
-    margin:auto;
-    position: relative;
-    z-index: 1;
-    animation: fadeIn 1s ease forwards;
+  max-width:750px; width:90%;
+  text-align:center;
+  padding:20px;
+  display:none;
+  margin:auto;
+  position:relative;
+  z-index:1;
+  animation: fadeIn 1s ease forwards;
 }
-
-@keyframes fadeIn {
-    0% {opacity:0; transform: translateY(20px);}
-    100% {opacity:1; transform: translateY(0);}
-}
+@keyframes fadeIn {0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
 
 h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 4rem;
-    background: linear-gradient(90deg,#ff0000,#ff4d4d);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow: 0 0 15px #ff0000;
-    margin-bottom: 15px;
+  font-family:'Orbitron',sans-serif;
+  font-size:4rem;
+  background: linear-gradient(90deg,#ff0000,#ff4d4d,#ff00ff,#ffcc00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 15px #ff00ff;
+  margin-bottom:15px;
 }
 
 .powered {
-    font-family:'Rajdhani',sans-serif;
-    font-size:1.5rem;
-    color:#00ff88;
-    margin-bottom:30px;
-    font-weight:bold;
-    text-shadow:0 0 12px #00ff88;
+  font-family:'Rajdhani',sans-serif;
+  font-size:1.5rem;
+  color:#00ff88;
+  margin-bottom:30px;
+  font-weight:bold;
+  text-shadow:0 0 12px #00ff88;
 }
 
 input {
-    width:100%; padding:16px 20px; font-size:17px;
-    border:3px solid #333; border-radius:12px;
-    background:#111; color:#fff; margin-bottom:20px;
-    transition:0.3s;
+  width:100%; padding:16px 20px; font-size:17px;
+  border:3px solid #333; border-radius:12px;
+  background:#111; color:#fff; margin-bottom:20px;
+  transition:0.3s;
 }
 input:focus { border-color:#ff0000; outline:none; }
 
 button.download-btn {
-    display:inline-block;
-    background: linear-gradient(45deg,#ff0000,#ff4d4d);
-    color:white;
-    padding:14px 30px; margin:10px;
-    border-radius:50px;
-    text-decoration:none;
-    font-weight:600;
-    font-family:'Rajdhani',sans-serif;
-    box-shadow:0 0 15px rgba(255,0,0,0.6);
-    transition:0.3s;
+  display:inline-block;
+  background: linear-gradient(90deg,#ff0055,#ff00ff,#ffcc00);
+  color:white;
+  padding:14px 30px;
+  margin:10px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:600;
+  font-family:'Rajdhani',sans-serif;
+  box-shadow:0 0 15px rgba(255,0,255,0.8);
+  transition:0.3s;
 }
 button.download-btn:hover {
-    transform:scale(1.05);
-    box-shadow:0 0 30px #ff0000;
+  transform:scale(1.05);
+  box-shadow:0 0 30px #ff00ff;
 }
 
 #result {
-    margin-top:30px; padding:25px;
-    background: rgba(20,20,20,0.85);
-    border:2px solid #333; border-radius:15px;
-    display:none;
-    backdrop-filter: blur(10px);
+  margin-top:30px; padding:25px;
+  background: rgba(20,20,20,0.85);
+  border:2px solid #333; border-radius:15px;
+  display:none;
+  backdrop-filter: blur(10px);
+  text-align:center;
 }
 
 footer {
-    margin-top:40px; padding:25px;
-    font-size:1.3rem; font-weight:bold;
-    color:#ff0000; text-shadow:0 0 12px red;
-    display:none;
+  margin-top:40px; padding:25px;
+  font-size:1.3rem; font-weight:bold;
+  color:#ff0000; text-shadow:0 0 12px red;
+  display:none;
 }
 </style>
 </head>
 <body>
 
-<!-- Start Button -->
 <button id="startBtn">Start Website</button>
 
-<!-- Background Video -->
-<video id="bgVideo" autoplay loop muted>
-    <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Cossdv/main/VID_20251123_155335_891.mp4" type="video/mp4">
+<video id="bgVideo" autoplay loop muted playsinline>
+  <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Cossdv/main/VID_20251123_155335_891.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
 </video>
 <div id="overlay"></div>
 
-<!-- Website Content -->
 <div class="container" id="mainContent">
-    <h1>OBITO DOWNLOADER</h1>
-    <div class="powered">Powered by Faizan Baloch</div>
-    <input type="text" id="urlInput" placeholder="Paste Instagram, TikTok, FB, Twitter link here..." />
-    <br/>
-    <button onclick="process()">DOWNLOAD NOW</button>
-    <div id="result"></div>
+  <h1>OBITO DOWNLOADER</h1>
+  <div class="powered">Powered by Faizan Baloch</div>
+  <input type="text" id="urlInput" placeholder="Paste Instagram, TikTok, FB, Twitter link here..." />
+  <br/>
+  <button id="downloadBtn">DOWNLOAD NOW</button>
+  <div id="result"></div>
 </div>
 
 <footer id="footer">Created by OBITO UCHIHA</footer>
@@ -155,66 +151,58 @@ const bgVideo = document.getElementById('bgVideo');
 const overlay = document.getElementById('overlay');
 const mainContent = document.getElementById('mainContent');
 const footer = document.getElementById('footer');
+const downloadBtn = document.getElementById('downloadBtn');
+const urlInput = document.getElementById('urlInput');
+const result = document.getElementById('result');
 
 startBtn.addEventListener('click', () => {
-    bgVideo.style.display = "block";
-    overlay.style.display = "block";
-    mainContent.style.display = "block";
-    footer.style.display = "block";
-    bgVideo.muted = false;
-    bgVideo.play();
-    startBtn.style.display = "none";
+  bgVideo.style.display="block";
+  overlay.style.display="block";
+  mainContent.style.display="block";
+  footer.style.display="block";
+  bgVideo.muted=false;
+  bgVideo.play().catch(()=>{}); // handle autoplay restrictions
+  startBtn.style.display="none";
 });
 
-// Process function using CORS proxy
 async function process() {
-    const input = document.getElementById('urlInput');
-    const result = document.getElementById('result');
-    const btn = document.querySelector('button[onclick="process()"]');
-    const url = input.value.trim();
+  const url = urlInput.value.trim();
+  if(!url) return alert("Bhai link daal pehle!");
 
-    if (!url) return alert("Bhai link daal pehle!");
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = "Processing...";
+  result.style.display = "none";
 
-    btn.disabled = true;
-    btn.textContent = "Processing...";
-    result.style.display = "none";
+  try {
+    const proxy = "https://corsproxy.io/?";
+    const apiUrl = `https://socialdownloder.anshapi.workers.dev?url=${encodeURIComponent(url)}`;
+    const res = await fetch(proxy + encodeURIComponent(apiUrl));
+    const data = await res.json();
 
-    try {
-        // Using free CORS proxy to fix fetch issue
-        const proxy = "https://corsproxy.io/?";
-        const apiUrl = `https://socialdownloder.anshapi.workers.dev?url=${encodeURIComponent(url)}`;
-        const res = await fetch(proxy + encodeURIComponent(apiUrl));
-        const data = await res.json();
+    if(!data.status) throw new Error(data.error || "Unsupported URL / Private Content");
 
-        if (!data.status) throw new Error(data.error || "Unsupported URL / Private Content");
+    let html = `<div class="success">✅ Video Mil Gaya!</div>`;
+    if(data.title) html += `<h3 style="color:#ff00ff; text-shadow:0 0 10px #ff00ff;">${data.title}</h3>`;
+    if(data.thumbnail) html += `<img src="${data.thumbnail}" style="max-width:100%; border-radius:15px; margin:15px 0;">`;
 
-        let html = `<div class="success">✅ Video Mil Gaya!</div>`;
-        if (data.title) html += `<h3>${data.title}</h3>`;
-        if (data.thumbnail) html += `<img src="${data.thumbnail}" style="max-width:100%; border-radius:15px; margin:15px 0;">`;
+    if(data.urls?.length > 0){
+      data.urls.forEach((link,i)=>{
+        html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1}</a><br/>`;
+      });
+    } else html += `<p style="color:#ff4444;">No download link found. Use public link!</p>`;
 
-        if (data.urls?.length > 0) {
-            data.urls.forEach((link,i)=>{
-                html += `<a href="${link}" target="_blank" download class="download-btn">📥 DOWNLOAD ${i+1}</a><br/>`;
-            });
-        } else {
-            html += `<p>No download link found. Make sure it is a public link!</p>`;
-        }
-
-        result.innerHTML = html;
-    } catch(e) {
-        result.innerHTML = `<div class="error">❌ Error: ${e.message}<br><br>Tip: Use public link & remove extra parameters!</div>`;
-    } finally {
-        btn.disabled = false;
-        btn.textContent = "DOWNLOAD NOW";
-        result.style.display = "block";
-    }
+    result.innerHTML = html;
+  } catch(e) {
+    result.innerHTML = `<div class="error">❌ Error: ${e.message}<br><br>Tip: Use public link & remove extra parameters!</div>`;
+  } finally {
+    downloadBtn.disabled = false;
+    downloadBtn.textContent = "DOWNLOAD NOW";
+    result.style.display = "block";
+  }
 }
 
-// Enter key triggers download
-document.getElementById('urlInput').addEventListener('keypress', e=>{
-    if(e.key==='Enter') process();
-});
+downloadBtn.addEventListener('click', process);
+urlInput.addEventListener('keypress', e => { if(e.key==='Enter') process(); });
 </script>
-
 </body>
 </html>
